@@ -1,12 +1,12 @@
 {
-  "name": "@modelcontextprotocol/server-trello",
-  "version": "0.1.0",
+  "name": "@delorenj/mcp-server-trello",
+  "version": "0.2.0",
   "description": "A Model Context Protocol (MCP) server for interacting with Trello boards",
   "type": "module",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "bin": {
-    "mcp-trello-server": "./build/index.js"
+    "mcp-server-trello": "./build/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -14,12 +14,12 @@
     "dev": "ts-node --esm src/index.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
-    "prepare": "npm run build",
+    "prepare": "if [ \"$SKIP_PREPARE\" != \"true\" ]; then npm run build; fi",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modelcontextprotocol/server-trello.git"
+    "url": "git+https://github.com/delorenj/mcp-server-trello.git"
   },
   "keywords": [
     "mcp",
@@ -33,12 +33,12 @@
     "task-management",
     "kanban"
   ],
-  "author": "Model Context Protocol Team",
+  "author": "Jarad DeLorenzo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/modelcontextprotocol/server-trello/issues"
+    "url": "https://github.com/delorenj/mcp-server-trello/issues"
   },
-  "homepage": "https://github.com/modelcontextprotocol/server-trello#readme",
+  "homepage": "https://github.com/delorenj/mcp-server-trello#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
     "axios": "^1.6.2",

@@ -1,6 +1,27 @@
 # MCP Server Trello
+[![smithery badge](https://smithery.ai/badge/@modelcontextprotocol/mcp-server-trello)](https://smithery.ai/server/@modelcontextprotocol/mcp-server-trello)
 
 A Model Context Protocol (MCP) server that provides tools for interacting with Trello boards. This server enables seamless integration with Trello's API while handling rate limiting, type safety, and error handling automatically.
+
+<a href="https://glama.ai/mcp/servers/klqkamy7wt"><img width="380" height="200" src="https://glama.ai/mcp/servers/klqkamy7wt/badge" alt="Server Trello MCP server" /></a>
+
+## Changelog
+
+### 0.1.2
+
+- Added Docker support with multi-stage build
+- Improved security by moving environment variables to `.env`
+- Added Docker Compose configuration
+- Added `.env.template` for easier setup
+
+### 0.1.1
+
+- Added `move_card` tool to move cards between lists
+- Improved documentation
+
+### 0.1.0
+
+- Initial release with basic Trello board management features
 
 ## Features
 
@@ -12,39 +33,58 @@ A Model Context Protocol (MCP) server that provides tools for interacting with T
 
 ## Installation
 
+### Docker Installation (Recommended)
+
+The easiest way to run the server is using Docker:
+
+1. Clone the repository:
 ```bash
-npm install @modelcontextprotocol/mcp-server-trello
+git clone https://github.com/delorenj/mcp-server-trello
+cd mcp-server-trello
+```
+
+2. Copy the environment template and fill in your Trello credentials:
+```bash
+cp .env.template .env
+```
+
+3. Build and run with Docker Compose:
+```bash
+docker compose up --build
+```
+
+### Installing via Smithery
+
+To install Trello Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@modelcontextprotocol/mcp-server-trello):
+
+```bash
+npx -y @smithery/cli install @modelcontextprotocol/mcp-server-trello --client claude
+```
+
+### Manual Installation
+```bash
+npm install @delorenj/mcp-server-trello
 ```
 
 ## Configuration
 
-Add the server to your MCP settings file with the following configuration:
+The server can be configured using environment variables. Create a `.env` file in the root directory with the following variables:
 
-```json
-{
-  "mcpServers": {
-    "trello": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-trello"],
-      "env": {
-        "TRELLO_API_KEY": "your-api-key",
-        "TRELLO_TOKEN": "your-token",
-        "TRELLO_BOARD_ID": "your-board-id"
-      }
-    }
-  }
-}
+```env
+TRELLO_API_KEY=your-api-key
+TRELLO_TOKEN=your-token
+TRELLO_BOARD_ID=your-board-id
 ```
 
-### Required Environment Variables
-
-- `TRELLO_API_KEY`: Your Trello API key (get from https://trello.com/app-key)
-- `TRELLO_TOKEN`: Your Trello token (generate using your API key)
-- `TRELLO_BOARD_ID`: ID of the Trello board to interact with (found in board URL)
+You can get these values from:
+- API Key: https://trello.com/app-key
+- Token: Generate using your API key
+- Board ID: Found in the board URL
 
 ## Available Tools
 
 ### get_cards_by_list_id
+
 Fetch all cards from a specific list.
 
 ```typescript
@@ -57,6 +97,7 @@ Fetch all cards from a specific list.
 ```
 
 ### get_lists
+
 Retrieve all lists from the configured board.
 
 ```typescript
@@ -67,6 +108,7 @@ Retrieve all lists from the configured board.
 ```
 
 ### get_recent_activity
+
 Fetch recent activity on the board.
 
 ```typescript
@@ -79,6 +121,7 @@ Fetch recent activity on the board.
 ```
 
 ### add_card_to_list
+
 Add a new card to a specified list.
 
 ```typescript
@@ -95,6 +138,7 @@ Add a new card to a specified list.
 ```
 
 ### update_card_details
+
 Update an existing card's details.
 
 ```typescript
@@ -111,6 +155,7 @@ Update an existing card's details.
 ```
 
 ### archive_card
+
 Send a card to the archive.
 
 ```typescript
@@ -123,6 +168,7 @@ Send a card to the archive.
 ```
 
 ### add_list_to_board
+
 Add a new list to the board.
 
 ```typescript
@@ -135,6 +181,7 @@ Add a new list to the board.
 ```
 
 ### archive_list
+
 Send a list to the archive.
 
 ```typescript
@@ -147,6 +194,7 @@ Send a list to the archive.
 ```
 
 ### get_my_cards
+
 Fetch all cards assigned to the current user.
 
 ```typescript
@@ -156,9 +204,24 @@ Fetch all cards assigned to the current user.
 }
 ```
 
+### move_card
+
+Move a card to a different list.
+
+```typescript
+{
+  name: 'move_card',
+  arguments: {
+    cardId: string,  // ID of the card to move
+    listId: string   // ID of the target list
+  }
+}
+```
+
 ## Rate Limiting
 
 The server implements a token bucket algorithm for rate limiting to comply with Trello's API limits:
+
 - 300 requests per 10 seconds per API key
 - 100 requests per 10 seconds per token
 
@@ -167,6 +230,7 @@ Rate limiting is handled automatically, and requests will be queued if limits ar
 ## Error Handling
 
 The server provides detailed error messages for various scenarios:
+
 - Invalid input parameters
 - Rate limit exceeded
 - API authentication errors
@@ -183,30 +247,28 @@ The server provides detailed error messages for various scenarios:
 ### Setup
 
 1. Clone the repository
+
 ```bash
-git clone https://github.com/modelcontextprotocol/server-trello.git
-cd server-trello
+git clone https://github.com/delorenj/mcp-server-trello
+cd mcp-server-trello
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 3. Build the project
+
 ```bash
 npm run build
 ```
 
-### Running Tests
-
-```bash
-npm test
-```
 
 ## Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Contributions are welcome!
 
 ## License
 
